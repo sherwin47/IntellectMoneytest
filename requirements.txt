@@ -8,3 +8,4 @@ cryptography
 python-multipart
 passlib[bcrypt]
 python-jose[cryptography]
+gunicorn
