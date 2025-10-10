@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadMarketNews() {
         const newsList = document.getElementById('news-list');
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/market-news');
+            const response = await fetch('https://intellect-money-backend.onrender.com/api/recommendations');
             if (!response.ok) throw new Error('Failed to load news.');
             
             const data = await response.json();
