@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - IntellectMoney</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">Intellect<span>Money</span></a>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="index.html" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <h1>Your Personalized Financial Dashboard</h1>
+        <p class="subtitle">Enter your financial details below to generate a unique, AI-powered plan.</p>
+
+        <div class="dashboard-grid">
+            
+
+            <div class="input-card card">
+                <h2>Your Financial Profile</h2>
+                <form id="finance-form">
+                    <label for="monthly-income">Monthly Income (₹)</label>
+                    <input type="number" id="monthly-income" placeholder="e.g., 80000" required>
+
+                    <label for="monthly-expenses">Monthly Expenses (₹)</label>
+                    <input type="number" id="monthly-expenses" placeholder="e.g., 35000" required>
+
+                    <label for="total-savings">Total Current Savings (₹)</label>
+                    <input type="number" id="total-savings" placeholder="e.g., 500000" required>
+
+                    <label for="risk-tolerance">Risk Tolerance</label>
+                    <select id="risk-tolerance" required>
+                        <option value="low">Low (Conservative)</option>
+                        <option value="medium" selected>Medium (Balanced)</option>
+                        <option value="high">High (Growth-Oriented)</option>
+                    </select>
+
+                    <button type="submit" class="cta-button">Generate My Plan</button>
+                </form>
+            </div>
+
+            <div id="recommendation-output" class="output-card card" style="display: none;">
+                <h2>Your AI-Generated Financial Plan</h2>
+                
+                <div id="summary">
+                    <h3>Your Financial Summary</h3>
+                    <p><strong>Monthly Savings Potential:</strong> <span id="savings-potential"></span></p>
+                    <p><strong>Your Investor Profile:</strong> <span id="investor-profile"></span></p>
+                    <p id="ai-summary-text" class="ai-summary"></p>
+                </div>
+
+                <div id="actions">
+                    <h3>Recommended Actions:</h3>
+                    <ul id="recommendations-list">
+                        </ul>
+                </div>
+
+                <div id="portfolio">
+                    <h3>Suggested Portfolio Allocation:</h3>
+                    <div class="chart-container">
+                        <canvas id="portfolio-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IntellectMoney. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

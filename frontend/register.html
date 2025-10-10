@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - IntellectMoney</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">Intellect<span>Money</span></a>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html" class="cta-button">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card card">
+            <h2>Create Your Account</h2>
+            <p>Start your journey to financial clarity with IntellectMoney.</p>
+            <form id="register-form">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" placeholder="Name" required>
+
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="you@example.com" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Choose a strong password" required>
+
+                <button type="submit" class="cta-button">Create Account</button>
+            </form>
+            <p class="auth-switch">Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IntellectMoney. All Rights Reserved.</p>
+    </footer>
+    <script src="js/register.js"></script>
+</body>
+</html>

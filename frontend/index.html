@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to IntellectMoney</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">Intellect<span>Money</span></a>
+            </div>
+            <ul>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html" class="cta-button">Get Started</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="vanta-globe-bg" class="landing-hero">
+        <div class="landing-content">
+            <h1 class="landing-logo">IntellectMoney</h1>
+            <p class="landing-tagline">Your AI-powered guide to financial clarity and growth in India.</p>
+            <div class="landing-actions">
+                <a href="register.html" class="cta-button">Create Free Account</a>
+                <a href="#problem" class="cta-button secondary">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 IntellectMoney. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/home.js"></script> <script>
+        VANTA.GLOBE({
+            el: "#vanta-globe-bg",
+            el: "#vanta-globe-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x2c9cff,      // A brighter, more vibrant blue for globe lines
+            color2: 0x2c9cff,     // Second color for variety
+            backgroundColor: 0x0f1a2e, // A slightly lighter, more dynamic navy
+            size: 1.20           // Makes the globe points slightly larger
+        })
+    </script>
+</body>
+</html>

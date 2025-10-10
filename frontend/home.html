@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - IntellectMoney</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">Intellect<span>Money</span></a>
+            </div>
+            <ul>
+                <li><a href="home.html" class="active">Home</a></li>
+                <li><a href="#news">News</a></li> <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="index.html" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to IntellectMoney</h1>
+            <p>Secure, adaptive, and personalized financial guidance to democratize your financial planning.</p>
+            <a href="dashboard.html" class="cta-button">Go to Your Dashboard</a>
+        </section>
+
+        <section id="news" class="content-section">
+            <h2>Latest Market News & Insights</h2>
+            <div class="card news-card">
+                <ul id="news-list" class="news-list">
+                    <li>Loading news...</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="security" class="content-section">
+            </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 IntellectMoney. All Rights Reserved.</p>
+    </footer>
+
+    <div id="chat-bubble" class="chat-bubble">🤖</div>
+    <div id="chat-window" class="chat-window hidden-chat">
+        <div class="chat-header">
+            <h3>IntellectMoney Assistant</h3>
+            <button id="close-chat">✕</button>
+        </div>
+        <div id="chat-body" class="chat-body">
+            <div class="chat-message bot">Hi there! Ask me a financial question.</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="Type your question...">
+            <button id="send-chat">Send</button>
+        </div>
+    </div>
+    
+    <script src="js/chatbot.js"></script>
+    <script src="js/home.js"></script> </body>
+</html>
