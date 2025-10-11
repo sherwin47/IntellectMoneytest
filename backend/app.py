@@ -2,7 +2,7 @@
 
 import os
 import sys
-from datetime import timedelta
+from datetime import timedelta, datetime # Ensure datetime is imported
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -22,13 +22,18 @@ sys.path.insert(0, project_root)
 # --- END OF FIX ---
 
 # Now, all your custom module imports will work correctly
-from backend.database import get_db, create_database, User
+from backend.database import get_db, create_database, User, FinancialPlan # ADD FinancialPlan HERE
 from ml.fuzzy_logic import calculate_risk_profile
+from typing import List
+from datetime import datetime
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from backend.auth import (
     create_access_token,
     get_password_hash,
     verify_password,
     ACCESS_TOKEN_EXPIRE_MINUTES,
+    get_current_user # ADD get_current_user HERE
 )
 
 # --- API Key Configuration ---
@@ -58,6 +63,13 @@ app.add_middleware(
     allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
 )
 
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
+@app.get("/")
+async def read_index():
+    """Serves the main index.html file."""
+    return FileResponse('frontend/index.html')
+
 # --- Pydantic Models ---
 class UserCreate(BaseModel): fullname: str; email: str; password: str
 class UserLogin(BaseModel): email: str; password: str
@@ -68,6 +80,23 @@ class ChatMessage(BaseModel): message: str
 class ChatResponse(BaseModel): reply: str
 class NewsArticle(BaseModel): title: str; url: str; summary: str; source: str
 class MarketNewsResponse(BaseModel): articles: List[NewsArticle]
+class PlanResponse(BaseModel):
+    id: int
+    created_at: datetime
+    income: float
+    expenses: float
+    ai_summary: str
+    recommendations_json: str
+    portfolio_json: str
+
+    class Config:
+        orm_mode = True # Helps Pydantic read data from the database model
+
+class HealthScoreResponse(BaseModel):
+    score: int
+    rating: str
+    feedback: str
+
 
 
 # --- Helper Function to Fetch Stock Price ---
@@ -93,6 +122,8 @@ def fetch_stock_price(symbol: str):
 
 
 # --- API Endpoints ---
+
+
 
 @app.post("/api/register")
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
@@ -169,42 +200,45 @@ def get_recommendations(profile: UserFinancialProfile):
         <investor_type>{risk_profile_description}</investor_type>
     </profile>
 
-    Your response MUST be in two distinct parts.
+    Your response MUST be in two distinct parts, marked with <advice> and <portfolio> headers.
 
-    First, provide personalized advice inside <advice> tags. This should include a summary paragraph and a bulleted or numbered list of 3-4 actionable recommendations.
+    First, provide personalized advice under an <advice> header. This should include a summary paragraph and a bulleted or numbered list of 3-4 actionable recommendations.
     
-    Second, provide a portfolio allocation inside <portfolio> tags. This MUST be a single, valid JSON object with "labels" and "data" keys. The data values must sum to 100.
+    Second, provide a portfolio allocation under a <portfolio> header. This MUST be a single, valid JSON object with "labels" and "data" keys. The data values must sum to 100.
     """
 
     try:
         response = model.generate_content(prompt)
-        print("--- AI Raw Response --- \n", response.text, "\n-----------------------")
+        raw_text = response.text
+        print("--- AI Raw Response --- \n", raw_text, "\n-----------------------")
         
-        advice_match = re.search(r'<(?:advice|summary)>(.*?)</(?:advice|summary)>', response.text, re.DOTALL)
-        portfolio_match = re.search(r'<portfolio>(.*?)</portfolio>', response.text, re.DOTALL)
+        # --- NEW ROBUST PARSING LOGIC ---
+        # Find the start of each section using the headers
+        advice_start_index = raw_text.find('<advice>')
+        portfolio_start_index = raw_text.find('<portfolio>')
 
-        if not advice_match or not portfolio_match:
-            raise ValueError("AI response did not contain the required advice and portfolio tags.")
-            
-        advice_text = advice_match.group(1).strip()
-        portfolio_block = portfolio_match.group(1).strip()
+        if advice_start_index == -1 or portfolio_start_index == -1:
+            raise ValueError("AI response did not contain the required <advice> and <portfolio> markers.")
+
+        # The advice text is the content between the two markers
+        advice_text = raw_text[advice_start_index + len('<advice>'):portfolio_start_index].strip()
+        
+        # The portfolio block is all the content after its marker
+        portfolio_block = raw_text[portfolio_start_index + len('<portfolio>'):].strip()
+        # --- END OF NEW LOGIC ---
 
         json_match = re.search(r'\{.*\}', portfolio_block, re.DOTALL)
         if not json_match:
-            raise ValueError("Could not find a valid JSON object within the <portfolio> tags.")
+            raise ValueError("Could not find a valid JSON object within the portfolio section.")
         
         portfolio_json_str = json_match.group(0)
 
-        recommendations = []
-        list_items = re.findall(r'<(?:item|li)>(.*?)</(?:item|li)>', advice_text, re.DOTALL)
-        if list_items:
-            recommendations = [item.strip() for item in list_items]
-        else:
-            # Fallback for plain list items
-            recommendations = [rec.strip() for rec in advice_text.split('\n') if re.match(r'^\s*[\*\-\d]', rec.strip())]
+        # The rest of your parsing logic for recommendations and summary remains the same
+        recommendations = [rec.strip() for rec in advice_text.split('\n') if re.match(r'^\s*[\*\-\d]', rec.strip())]
 
         summary_paragraph = advice_text
         if recommendations:
+            # Try to find the first recommendation to separate it from the summary
             first_rec_index = advice_text.find(recommendations[0])
             if first_rec_index != -1:
                 summary_paragraph = advice_text[:first_rec_index].strip()
@@ -222,3 +256,79 @@ def get_recommendations(profile: UserFinancialProfile):
     except Exception as e:
         print(f"An error occurred during recommendation generation: {e}")
         raise HTTPException(status_code=500, detail="Failed to generate or parse AI-powered recommendations.")
+    
+@app.post("/api/plans")
+def save_financial_plan(
+    plan_data: RecommendationResponse,
+    profile_data: UserFinancialProfile,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user) # Securely gets the logged-in user
+):
+    """Saves a generated financial plan to the current user's profile."""
+    new_plan = FinancialPlan(
+        # Save the user's inputs
+        income=profile_data.income,
+        expenses=profile_data.expenses,
+        savings=profile_data.savings,
+        risk_tolerance=profile_data.risk_tolerance_input,
+        
+        # Save the AI's outputs
+        ai_summary=plan_data.summary.get("ai_summary"),
+        recommendations_json=json.dumps(plan_data.recommendations),
+        portfolio_json=json.dumps(plan_data.portfolio),
+        
+        # Link the plan to the logged-in user
+        owner_id=current_user.id
+    )
+    
+    db.add(new_plan)
+    db.commit()
+    db.refresh(new_plan)
+    
+    return {"message": "Financial plan saved successfully!", "plan_id": new_plan.id}
+
+@app.get("/api/plans/me", response_model=List[PlanResponse])
+def get_user_plans(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user) # Securely gets the logged-in user
+):
+    """Fetches all financial plans saved by the current logged-in user."""
+    # This fetches plans and sorts them with the newest first
+    return db.query(FinancialPlan).filter(FinancialPlan.owner_id == current_user.id).order_by(FinancialPlan.created_at.desc()).all()
+
+@app.post("/api/health-score", response_model=HealthScoreResponse)
+def get_health_score(profile: UserFinancialProfile):
+    """Calculates a financial health score based on user inputs."""
+    
+    # 1. Calculate Savings Rate (most important metric)
+    # The percentage of income saved each month.
+    savings_rate = 0
+    if profile.income > 0:
+        savings_rate = ((profile.income - profile.expenses) / profile.income) * 100
+    
+    # 2. Calculate Savings Buffer (cushion for emergencies)
+    # How many months of expenses are covered by savings.
+    savings_buffer = 0
+    if profile.expenses > 0:
+        savings_buffer = profile.savings / profile.expenses
+        
+    # 3. Simple scoring logic (you can make this more complex)
+    score = 0
+    # 60 points from savings rate (e.g., 50% rate = 30 points)
+    score += max(0, min(60, savings_rate * 1.2))
+    # 40 points from savings buffer (e.g., 6 months buffer = 40 points)
+    score += max(0, min(40, (savings_buffer / 6) * 40))
+    
+    score = int(score) # Convert to a whole number
+    
+    # 4. Provide a rating and feedback
+    rating = "Needs Improvement"
+    feedback = "Focus on increasing your monthly savings."
+    if score > 80:
+        rating = "Excellent"
+        feedback = "You have outstanding financial discipline!"
+    elif score > 60:
+        rating = "Good"
+        feedback = "You are on the right track. Keep it up!"
+        
+    return {"score": score, "rating": rating, "feedback": feedback}

@@ -1,0 +1,18 @@
+How to Resolve Them
+To make these letters disappear, you need to stage and commit your changes. This tells Git to save a new version of your project.
+
+1. Stage Your Changes
+Run the following command in your terminal. This tells Git to get ready to save all the modified (M) and new (U) files.
+
+PowerShell
+
+git add .
+After you run this, the letters might change to 'A' (for Added) or 'M' depending on your setup.
+
+2. Commit Your Changes
+Now, save your staged changes with a descriptive message.
+
+PowerShell
+
+git commit -m "Add JWT authentication and save financial plans"
+After the commit is complete, the 'M' and 'U' letters will disappear because you have successfully saved the current state of your project.
