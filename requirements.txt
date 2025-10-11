@@ -1,21 +1,10 @@
-# Core web framework
 fastapi
 uvicorn
-
-# Database
 sqlalchemy
-psycopg2-binary # For PostgreSQL on Render
-
-# AI and APIs
+python-dotenv
 google-generativeai
 requests
-
-# Security and Authentication
 passlib[bcrypt]
 python-jose[cryptography]
-
-# Environment variables
-python-dotenv
-
-# Production server
+psycopg2-binary
 gunicorn
