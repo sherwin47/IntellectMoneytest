@@ -11,6 +11,15 @@
 </head>
 <body>
 
+     <script>
+        // This script protects the page
+        const token = localStorage.getItem('userToken');
+        if (!token) {
+            // If no token is found, redirect to the login page
+            window.location.href = 'login.html';
+        }
+    </script>
+
     <header>
         <nav>
             <div class="logo">
@@ -19,7 +28,9 @@
             <ul>
                 <li><a href="home.html" class="active">Home</a></li>
                 <li><a href="#news">News</a></li> <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="index.html" class="cta-button">Logout</a></li>
+                <ul>
+                    <li><button class="cta-button logout-button">Logout</button></li>
+                </ul>
             </ul>
         </nav>
     </header>
@@ -64,5 +75,7 @@
     </div>
     
     <script src="js/chatbot.js"></script>
-    <script src="js/home.js"></script> </body>
+    <script src="js/home.js"></script>
+    <script src="js/auth.js"></script>
+ </body>
 </html>

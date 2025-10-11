@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.disabled = true;
 
         try {
-            const response = await fetch('https://intellect-money-backend.onrender.com/api/login', {
+            const response = await fetch('http://127.0.0.1:8000/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,9 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                // SUCCESS: Redirect to the main home page
-                alert('Login successful! Redirecting to the homepage.');
-                window.location.href = 'home.html'; 
+                // --- START OF UPDATE ---
+                // SUCCESS: Get the token, save it, and then redirect
+                const data = await response.json();
+                
+                if (data.access_token) {
+                    localStorage.setItem('userToken', data.access_token);
+                    window.location.href = 'home.html';
+                } else {
+                    alert('Login successful, but no token was received.');
+                }
+                // --- END OF UPDATE ---
             } else {
                 // ERROR: Show an error message
                 const errorData = await response.json();

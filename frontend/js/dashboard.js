@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         aiSummaryText.textContent = 'Analyzing your profile...';
 
         try {
-            const response = await fetch('https://intellect-money-backend.onrender.com/api/recommendations', {
+            const response = await fetch('http://127.0.0.1:8000/api/recommendations', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userProfile),
