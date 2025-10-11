@@ -1,5 +1,4 @@
 fastapi
-uvicorn
 sqlalchemy
 python-dotenv
 google-generativeai
@@ -7,4 +6,3 @@ requests
 passlib[bcrypt]
 python-jose[cryptography]
 psycopg2-binary
-gunicorn
