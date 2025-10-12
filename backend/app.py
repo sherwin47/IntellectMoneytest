@@ -167,7 +167,8 @@ def handle_chat(message: ChatMessage):
 
 @app.get("/api/market-news", response_model=MarketNewsResponse)
 def get_market_news():
-    url = f"https://newsapi.org/v2/everything?q=finance&language=en&sortBy=publishedAt&pageSize=5&apiKey={NEWS_API_KEY}"
+    hardcoded_key = "9793f27ab28f45738a619019acd59246"
+    url = f"https://newsapi.org/v2/everything?q=finance&language=en&sortBy=publishedAt&pageSize=5&apiKey={hardcoded_key}"
     try:
         response = requests.get(url)
         data = response.json()
