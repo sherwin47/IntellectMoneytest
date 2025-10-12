@@ -1,48 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - IntellectMoney</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">
-                <a href="index.html">Intellect<span>Money</span></a>
-            </div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html" class="cta-button">Register</a></li>
-            </ul>
-        </nav>
-    </header>
+// frontend/js/register.js
 
-    <main class="auth-container">
-        <div class="auth-card card">
-            <h2>Create Your Account</h2>
-            <p>Start your journey to financial clarity with IntellectMoney.</p>
-            <form id="register-form">
-                <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" placeholder="Name" required>
+document.addEventListener('DOMContentLoaded', () => {
+    const registerForm = document.getElementById('register-form');
 
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="you@example.com" required>
+    registerForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent default form submission
 
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Choose a strong password" required>
+        const fullname = document.getElementById('fullname').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const button = event.target.querySelector('button');
 
-                <button type="submit" class="cta-button">Create Account</button>
-            </form>
-            <p class="auth-switch">Already have an account? <a href="login.html">Login here</a></p>
-        </div>
-    </main>
+        // 1. Check for empty fields
+        if (!fullname || !email || !password) {
+            alert('Please fill in all fields.');
+            return;
+        }
 
-    <footer>
-        <p>&copy; 2025 IntellectMoney. All Rights Reserved.</p>
-    </footer>
-    <script src="js/register.js"></script>
-</body>
-</html>
+        // 2. NEW: Check for password length (bcrypt limitation)
+        if (password.length > 72) {
+            alert('Password cannot be longer than 72 characters.');
+            return;
+        }
+        
+        button.textContent = 'Creating Account...';
+        button.disabled = true;
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ fullname, email, password }),
+            });
+
+            if (response.ok) {
+                // SUCCESS: Redirect to the login page
+                alert('Registration successful! Please log in.');
+                window.location.href = 'login.html';
+            } else {
+                // ERROR: Show an error message
+                const errorData = await response.json();
+                alert(`Registration failed: ${errorData.detail}`);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+            alert('An error occurred during registration. Please try again.');
+        } finally {
+            button.textContent = 'Create Account';
+            button.disabled = false;
+        }
+    });
+});

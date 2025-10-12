@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // --- Step 1: Fetch AI Recommendations ---
-            const recommendationsResponse = await fetch('/api/recommendations', {
+            const recommendationsResponse = await fetch('http://127.0.0.1:8000/api/recommendations', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userProfile),
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayRecommendations(planData);
 
             // --- Step 2: Fetch Financial Health Score ---
-            const healthScoreResponse = await fetch('/api/health-score', {
+            const healthScoreResponse = await fetch('http://127.0.0.1:8000/api/health-score', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userProfile),
