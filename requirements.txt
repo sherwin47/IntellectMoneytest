@@ -12,3 +12,4 @@ scikit-fuzzy
 pydantic
 scikit-learn
 pandas
+networkx
