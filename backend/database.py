@@ -27,7 +27,11 @@ if not DATABASE_URL.startswith("postgresql"):
     engine_args["connect_args"] = {"check_same_thread": False}
 
 # This is the single, correct engine creation
-engine = create_engine(DATABASE_URL, **engine_args)
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    pool_recycle=300,
+)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
