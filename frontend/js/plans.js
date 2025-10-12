@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/plans/me', {
+            const response = await fetch('/api/plans/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
