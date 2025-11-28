@@ -35,6 +35,7 @@
     </header>
 
     <main class="dashboard-container">
+        <div id="agent-alerts-container" style="margin-bottom: 20px;"></div>
         <h1>Your Personalized Financial Dashboard</h1>
         <p class="subtitle">Enter your financial details below to generate a unique, AI-powered plan.</p>
 
@@ -52,6 +53,9 @@
 
                     <label for="total-savings">Total Current Savings (₹)</label>
                     <input type="number" id="total-savings" placeholder="e.g., 500000" required>
+
+                    <label for="financial-goal">Financial Goal (Optional)</label>
+                    <input type="text" id="financial-goal" placeholder="e.g., Buy a Bike (₹1.5L) or Emergency Fund">
 
                     <label for="risk-tolerance">Risk Tolerance</label>
                     <select id="risk-tolerance" required>

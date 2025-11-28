@@ -796,6 +796,25 @@ main {
     margin-bottom: 10px;
 }
 
+/* Add this to style.css */
+
+#recommendations-list {
+    list-style: none; /* Remove default bullets because AI sends numbers */
+    padding-left: 0;
+}
+
+#recommendations-list li {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 3px solid #2c9cff; /* Blue accent line on the left */
+}
+
+/* Make the strong text pop */
+strong {
+    font-weight: 700;
+}
+
 /* Scroll Behavior for smooth link clicking */
 html {
     scroll-behavior: smooth;
