@@ -1,23 +1,23 @@
-// frontend/js/register.js
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('register-form');
 
     registerForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault(); 
 
         const fullname = document.getElementById('fullname').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const button = event.target.querySelector('button');
 
-        // 1. Check for empty fields
+        
         if (!fullname || !email || !password) {
             alert('Please fill in all fields.');
             return;
         }
 
-        // 2. NEW: Check for password length (bcrypt limitation)
+        
         if (password.length > 72) {
             alert('Password cannot be longer than 72 characters.');
             return;
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.disabled = true;
 
         try {
-            const response = await fetch('/api/register', {
+            const response = await fetch('http://127.0.0.1:8000/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                // SUCCESS: Redirect to the login page
+                
                 alert('Registration successful! Please log in.');
                 window.location.href = 'login.html';
             } else {
-                // ERROR: Show an error message
+                
                 const errorData = await response.json();
                 alert(`Registration failed: ${errorData.detail}`);
             }

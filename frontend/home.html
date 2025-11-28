@@ -12,10 +12,10 @@
 <body>
 
      <script>
-        // This script protects the page
+        
         const token = localStorage.getItem('userToken');
         if (!token) {
-            // If no token is found, redirect to the login page
+            
             window.location.href = 'login.html';
         }
     </script>
@@ -29,6 +29,7 @@
                 <li><a href="home.html" class="active">Home</a></li>
                 <li><a href="#news">News</a></li> <li><a href="dashboard.html">Dashboard</a></li>
                 <li><a href="plans.html">My Plans</a></li>
+                
                 <ul>
                     <li><button class="cta-button logout-button">Logout</button></li>
                 </ul>

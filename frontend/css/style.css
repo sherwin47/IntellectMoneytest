@@ -719,3 +719,94 @@ main {
 .score-feedback {
     color: #666;
 }
+
+/* Features Section Styles */
+.features-section {
+    background-color: #0b1221; /* Matches the Vanta background tone */
+    color: #ffffff;
+    padding: 80px 20px;
+    position: relative;
+    z-index: 10;
+    border-top: 1px solid rgba(44, 156, 255, 0.1); /* Adds a very faint blue line at the top */
+    box-shadow: 0 -20px 20px rgba(0,0,0,0.5); /* Adds a subtle shadow for depth */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #2c9cff; /* Matches your logo/globe color */
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    color: #a0aec0;
+}
+
+/* Grid Layout */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Feature Cards */
+.feature-card {
+    background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #2c9cff;
+}
+
+/* Icons */
+.icon-box {
+    font-size: 2rem;
+    color: #2c9cff;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.feature-card p {
+    font-size: 0.95rem;
+    color: #cbd5e0;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Scroll Behavior for smooth link clicking */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    .features-grid {
+        grid-template-columns: 1fr; /* Stack cards on mobile */
+    }
+}

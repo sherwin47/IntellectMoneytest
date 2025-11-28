@@ -1,18 +1,17 @@
-// frontend/js/dashboard.js
 
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('userToken');
     const financeForm = document.getElementById('finance-form');
     const recommendationOutput = document.getElementById('recommendation-output');
     
-    // --- Elements for the main recommendation display ---
+    
     const savingsPotentialSpan = document.getElementById('savings-potential');
     const investorProfileSpan = document.getElementById('investor-profile');
     const aiSummaryText = document.getElementById('ai-summary-text');
     const recommendationsList = document.getElementById('recommendations-list');
     const chartCanvas = document.getElementById('portfolio-chart');
     
-    // --- NEW: Element for the Financial Health Score ---
+    
     const healthScoreDisplay = document.getElementById('health-score-display');
     
     let portfolioChart = null;
@@ -27,14 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
             risk_tolerance_input: document.getElementById('risk-tolerance').value
         };
 
-        // --- UI Feedback ---
+        
         recommendationOutput.style.display = 'block';
         healthScoreDisplay.innerHTML = '<p>Calculating your score...</p>'; // Loading state for score
         recommendationsList.innerHTML = '<li>Generating your personalized AI plan...</li>';
         aiSummaryText.textContent = 'Analyzing your profile...';
 
         try {
-            // --- Step 1: Fetch AI Recommendations ---
+            
             const recommendationsResponse = await fetch('http://127.0.0.1:8000/api/recommendations', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const planData = await recommendationsResponse.json();
             displayRecommendations(planData);
 
-            // --- Step 2: Fetch Financial Health Score ---
+            
             const healthScoreResponse = await fetch('http://127.0.0.1:8000/api/health-score', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -59,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const scoreData = await healthScoreResponse.json();
             displayHealthScore(scoreData);
 
-            // --- Step 3: Save the Plan ---
+            
             await savePlan(userProfile, planData);
 
         } catch (error) {
@@ -71,11 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function displayHealthScore(data) {
-            let scoreColor = '#F44336'; // Default to Red
+            let scoreColor = '#F44336'; 
             if (data.score > 80) {
-                scoreColor = '#4CAF50'; // Green for Excellent
+                scoreColor = '#4CAF50'; 
             } else if (data.score > 60) {
-                scoreColor = '#FFC107'; // Yellow for Good
+                scoreColor = '#FFC107'; 
             }
 
         healthScoreDisplay.innerHTML = `
@@ -88,10 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function savePlan(profileData, planData) {
-        // This function is unchanged
+        
         if (!token) return;
         try {
-            await fetch('/api/plans', {
+            await fetch('http://127.0.0.1:8000/api/plans', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -108,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayRecommendations(data) {
-        // This function is unchanged
+        
         savingsPotentialSpan.textContent = data.summary.monthly_savings_potential;
         investorProfileSpan.textContent = data.summary.your_investor_profile;
         aiSummaryText.textContent = data.summary.ai_summary;

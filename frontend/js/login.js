@@ -1,16 +1,16 @@
-// frontend/js/login.js
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
 
     loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); 
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const button = event.target.querySelector('button');
         
-        // Basic validation
+        
         if (!email || !password) {
             alert('Please fill in all fields.');
             return;
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.disabled = true;
 
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch('http://127.0.0.1:8000/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,8 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                // --- START OF UPDATE ---
-                // SUCCESS: Get the token, save it, and then redirect
+                
                 const data = await response.json();
                 
                 if (data.access_token) {
@@ -39,9 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     alert('Login successful, but no token was received.');
                 }
-                // --- END OF UPDATE ---
+                
             } else {
-                // ERROR: Show an error message
+                
                 const errorData = await response.json();
                 alert(`Login failed: ${errorData.detail}`);
             }

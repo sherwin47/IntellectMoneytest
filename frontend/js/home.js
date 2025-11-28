@@ -1,11 +1,11 @@
-// frontend/js/home.js
+
 
 document.addEventListener('DOMContentLoaded', () => {
     
     async function loadMarketNews() {
         const newsList = document.getElementById('news-list');
         try {
-            const response = await fetch('/api/market-news');
+            const response = await fetch('http://127.0.0.1:8000/api/market-news');
             if (!response.ok) throw new Error('Failed to load news.');
             
             const data = await response.json();
@@ -27,6 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Call the function to load news when the page loads
+    
     loadMarketNews();
 });

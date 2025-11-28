@@ -1,4 +1,4 @@
-// frontend/js/chatbot.js
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const chatBubble = document.getElementById('chat-bubble');
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInput = document.getElementById('chat-input');
     const chatBody = document.getElementById('chat-body');
 
-    // Toggle chat window visibility
+    
     chatBubble.addEventListener('click', () => {
         chatWindow.classList.toggle('hidden-chat');
     });
@@ -17,18 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
         chatWindow.classList.add('hidden-chat');
     });
 
-    // Handle sending a message
+    
     const sendMessage = async () => {
         const messageText = chatInput.value.trim();
         if (messageText === '') return;
 
-        // Display user's message
+        
         addMessageToChat(messageText, 'user');
         chatInput.value = '';
 
         try {
-            // Send message to backend
-            const response = await fetch('/api/chatbot', {
+            
+            const response = await fetch('http://127.0.0.1:8000/api/chatbot', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             
-            // Display bot's reply
+            
             addMessageToChat(data.reply, 'bot');
 
         } catch (error) {
@@ -51,13 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Helper function to add a message to the chat window
+    
     const addMessageToChat = (text, sender) => {
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', sender);
         messageElement.textContent = text;
         chatBody.appendChild(messageElement);
-        // Scroll to the latest message
+       
         chatBody.scrollTop = chatBody.scrollHeight;
     };
 

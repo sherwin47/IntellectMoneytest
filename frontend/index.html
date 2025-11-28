@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -29,10 +30,49 @@
             <p class="landing-tagline">Your AI-powered guide to financial clarity and growth in India.</p>
             <div class="landing-actions">
                 <a href="register.html" class="cta-button">Create Free Account</a>
-                <a href="#problem" class="cta-button secondary">Learn More</a>
+                <a href="#features" class="cta-button secondary">Learn More</a>
             </div>
         </div>
     </div>
+
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose IntellectMoney?</h2>
+                <p>Empowering your financial journey with cutting-edge technology.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="fas fa-robot"></i></div>
+                    <h3>AI-Powered Guidance</h3>
+                    <p><strong>Feature:</strong> Integrated with Google Gemini API.</p>
+                    <p><strong>Benefit:</strong> Receive personalized, human-like advice on how to save and invest based on your unique spending habits.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
+                    <h3>Smart Visualization</h3>
+                    <p><strong>Feature:</strong> Interactive dashboards and charts.</p>
+                    <p><strong>Use:</strong> Instantly track where your money goes. Categorize expenses and income to spot savings opportunities.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon-box"><i class="fas fa-brain"></i></div>
+                    <h3>Soft Computing Logic</h3>
+                    <p><strong>Feature:</strong> Fuzzy Logic Risk Assessment.</p>
+                    <p><strong>Benefit:</strong> Unlike rigid forms, our system understands the nuances of your finances to calculate your exact investor risk profile.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Bank-Grade Security</h3>
+                    <p><strong>Feature:</strong> Bcrypt Hashing & JWT Authentication.</p>
+                    <p><strong>Benefit:</strong> Your financial data is encrypted and secure. We prioritize your privacy above everything else.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; 2025 IntellectMoney. All Rights Reserved.</p>
@@ -41,9 +81,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
     <script src="js/animations.js"></script>
-    <script src="js/home.js"></script> <script>
+    <script src="js/home.js"></script> 
+    <script>
         VANTA.GLOBE({
-            el: "#vanta-globe-bg",
             el: "#vanta-globe-bg",
             mouseControls: true,
             touchControls: true,
@@ -52,10 +92,10 @@
             minWidth: 200.00,
             scale: 1.00,
             scaleMobile: 1.00,
-            color: 0x2c9cff,      // A brighter, more vibrant blue for globe lines
-            color2: 0x2c9cff,     // Second color for variety
-            backgroundColor: 0x0f1a2e, // A slightly lighter, more dynamic navy
-            size: 1.20           // Makes the globe points slightly larger
+            color: 0x2c9cff,      
+            color2: 0x2c9cff,     
+            backgroundColor: 0x0f1a2e, 
+            size: 1.20           
         })
     </script>
 </body>

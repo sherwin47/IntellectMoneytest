@@ -1,4 +1,4 @@
-// frontend/js/plans.js
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const plansContainer = document.getElementById('plans-container');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('/api/plans/me', {
+            const response = await fetch('http://127.0.0.1:8000/api/plans/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayPlans(plans) {
-        plansContainer.innerHTML = ''; // Clear loading message
+        plansContainer.innerHTML = ''; 
 
         if (plans.length === 0) {
             plansContainer.innerHTML = '<p>You have no saved plans yet. Go to the dashboard to generate one!</p>';
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         modal.style.display = 'block';
 
-        // Render the chart in the modal
+        
         new Chart(document.getElementById('portfolio-chart-modal'), {
             type: 'doughnut',
             data: {
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Modal close functionality
+    
     closeModal.addEventListener('click', () => {
         modal.style.display = 'none';
     });
